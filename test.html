@@ -15,11 +15,15 @@
 		
 		<button onclick="$.tooltip({icon:'success', content:'保存本项成功！',fontColor:'green'})">成功提示</button>
 		<button onclick="$.tooltip({icon:'error', content:'保存本项失败！',fontColor:'red'})">失败提示</button> 
-		<button onclick="$.tooltip({icon:'info', content:'你这样会失去我的！',fontColor:'red'})">警告</button> 
+		<button onclick="$.tooltip({icon:'info', content:'你这样会失去我的！',fontColor:'red'})">警告</button>
+		<button id="btn_2">自定义内容</button>
 		<div id="a" style="display: none;">
 			<p>真的要这样子？</p>
 			<button id="enter">确认</button>
 			<button id="cancel">取消</button>
+		</div>
+		<div id="tooltip_1" style="display: none;">
+			<span>啦啦啦</span>
 		</div>
 		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 		<script src="dialog.js"></script>
@@ -35,6 +39,11 @@
 					}
 				})
 			})
+			
+			$("#btn_2").on('click', function(){
+				$("#tooltip_1").tooltip()
+			})
+			
 		})
 		</script>
 	</body>

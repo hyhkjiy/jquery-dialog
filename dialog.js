@@ -28,9 +28,16 @@
 			var this_obj = this
 			,$tooltip = $('<div></div>')	// 创建提示
 				.css('color', this_obj.options.fontColor)	// 字体颜色
-				.append('<span class="text">' + this_obj.options.content + '</span>')	// 提示类容
 				.addClass(this_obj.options.type || 'tooltip_1') 	// 提示风格
 				.hide()
+			if(this.options.content)
+				$tooltip.append('<span class="text">' + this.options.content + '</span>')		// 参数传入的弹窗内容
+			else if(this.$element.html)
+			{
+				$tooltip.append('<span class="text">' + this.$element.html() + '</span>')	// 元素内的弹窗内容
+				this.$element.html('')
+			}
+				
 			if(this_obj.options.icon in this_obj.icons)$tooltip.prepend(this_obj.icons[this_obj.options.icon])	// 提示图标
 			$tooltip.appendTo('body')
 			this_obj.$toolitp = $tooltip
@@ -44,6 +51,8 @@
 			var this_obj = this
 			this_obj.$toolitp.fadeOut(100, function(){	// 隐藏动画
 				$(this).detach()	// 卸载元素
+				if(this_obj.$element.html)
+					this_obj.$element.html($(this).find('.text').html())	// 还原弹窗内容到元素内
 				if(this_obj.options.close)this_obj.options.close(this_obj)	// 关闭方法的回调函数
 			})
 			return this_obj
@@ -76,8 +85,12 @@
 			,$dialog_body = $('<div class="dialog_body"></div>').appendTo($dialog)		// 弹窗内容
 			if(this.options.content)
 				$dialog_body.append(this.options.content).css('padding-top','20px')		// 参数传入的弹窗内容
-			else if(this.$element.children)
-				$dialog_body.append(this.$element.children().detach())	// 元素内的弹窗内容
+			else if(this.$element.html)
+			{
+				$dialog_body.html(this.$element.html())	// 元素内的弹窗内容
+				this.$element.html('')
+			}
+				
 			if(this.options.width)$dialog.width(this.options.width)	// 自定义宽度
 			if(this.options.height)$dialog.height(this.options.height)	// 自定义高度
 			if(this.options.title)
@@ -85,7 +98,7 @@
 			else
 				$dialog_title.detach()
 			this_obj.$dialog_shade = $shade.appendTo("body")	// 添加弹窗到文档
-			$shade.show(200, function(){
+			$shade.fadeIn(200, function(){
 				if(this_obj.options.open)this_obj.options.open(this_obj)	// 打开方法的回调函数
 				if(this_obj.options.hideTime)setTimeout(function(){this_obj.close()},this_obj.options.hideTime)	// 定时关闭
 			})	// 弹出动画
@@ -93,11 +106,12 @@
 		},
 		close:function(){
 			var this_obj = this
-			this_obj.$dialog_shade.hide(200, function(){	// 隐藏动画
+			this_obj.$dialog_shade.fadeOut(200, function(){	// 隐藏动画
 				$(this).detach()
-				if($(this).find('.dialog_body').children().length)
-					this_obj.$element.append($(this).find('.dialog_body').children())	// 还原弹窗内容到元素内
+				if(this_obj.$element.html)
+					this_obj.$element.html($(this).find('.dialog_body').html())	// 还原弹窗内容到元素内
 				if(this_obj.options.close)this_obj.options.close(this_obj)	// 关闭方法的回调函数
+				
 			})
 			return this_obj
 		}
@@ -120,6 +134,12 @@
 	$.fn.dialog = function(options){
 		var dialog = new Dialog(this, options)
 		return dialog.open()
+	}
+	
+	// 提示扩展
+	$.fn.tooltip = function(options){
+		var tooltip = new Tooltip(this, options)
+		return tooltip.open()
 	}
 })(jQuery, window, document);
 	

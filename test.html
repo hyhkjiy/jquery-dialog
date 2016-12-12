@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="dialog.css"/>
+	</head>
+	<body>
+		<button id="btn_1">弹窗</button>
+		<button onclick="$.dialog({content:'我是弹窗哦'})">随便弹</button>
+		<button onclick="$.dialog({title:'提示', content:'我会自己关闭哦',hideTime:3000})">3秒后关闭</button>
+		<button onclick="$.dialog({title:'我有标题哦'})">带标题</button>
+		<button onclick="$.dialog({content:'啦啦啦', open:function(dialog){alert('打开后回调')}})">打开后回调</button>
+		<button onclick="$.dialog({content:'啦啦啦', close:function(dialog){alert('关闭后回调')}})">关闭后回调</button>
+		
+		<button onclick="$.tooltip({icon:'success', content:'保存本项成功！',fontColor:'green'})">成功提示</button>
+		<button onclick="$.tooltip({icon:'error', content:'保存本项失败！',fontColor:'red'})">失败提示</button> 
+		<button onclick="$.tooltip({icon:'info', content:'你这样会失去我的！',fontColor:'red'})">警告</button> 
+		<div id="a" style="display: none;">
+			<p>真的要这样子？</p>
+			<button id="enter">确认</button>
+			<button id="cancel">取消</button>
+		</div>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script src="dialog.js"></script>
+		<script>
+		$(function(){
+			$("#btn_1").on('click', function(){
+				$('#a').dialog({
+					title:'提示',
+					open:function(dialog){
+						$('#cancel').on('click', function(){
+							dialog.close()
+						})
+					}
+				})
+			})
+		})
+		</script>
+	</body>
+</html>

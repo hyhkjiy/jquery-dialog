@@ -15,8 +15,8 @@ text-align:center}
 .dialog>.dialog_btns{width:100%;height:49px;border-top: 1px solid #e7e7e7;background-color: #f5f5f5;
 	position: absolute;bottom: 0;}
 .dialog>.dialog_btns>.def-btn{width:105px;height:35px;border:none;background-color: #4bba8f;color:#fff;
-	margin:7px 18px}
-
+	margin:7px 18px;outline:none;}
+.dialog>.dialog_btns>.def-btn:hover{background-color: #42a680;}
 
 .tooltip_1{width: 298px;height: 98px;line-height:98px;text-align:center;background-color: #fff;
     	border:1px solid #ddd;font-size: 14px;margin:auto;position: absolute;top:0;right: 0;bottom: 0;left:0;}

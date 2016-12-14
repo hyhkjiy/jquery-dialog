@@ -65,7 +65,7 @@
 		this.$dialog_shade = null
 		this.defaults = {
 			width: '400px',
-			height: '300px',
+			height: '200px',
 			title: '',
 			content: '',
 			hideTime: 0,

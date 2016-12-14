@@ -17,10 +17,59 @@
 		<button onclick="$.tooltip({icon:'error', content:'保存本项失败！',fontColor:'red'})">失败提示</button> 
 		<button onclick="$.tooltip({icon:'info', content:'你这样会失去我的！',fontColor:'red'})">警告</button>
 		<button id="btn_2">自定义内容</button>
+		<div class="">
+			<dl>
+				<dt>弹窗参数:</dt>
+				<dd>
+					width: 弹窗宽度
+				</dd>
+				<dd>
+					width: 弹窗高度
+				</dd>
+				<dd>
+					title: 弹窗标题
+				</dd>
+				<dd>
+					content: 弹窗内容
+				</dd>
+				<dd>
+					hideTime: 自动关闭的时间(单位:ms),为零则不自动关闭
+				</dd>
+				<dd>
+					open: 打开弹窗后的回调函数,可接受一个dialog对象
+				</dd>
+				<dd>
+					close: 关闭弹窗后的回调函数,可接受一个dialog对象
+				</dd>
+				<dd>
+					showClose: 是否显示关闭按钮,默认为true
+				</dd>
+				<dd>
+					enterBtn/cancelBtn: 确认关闭按钮,接受如下json
+					<br />
+					{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;text: 按钮名称,<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;style: 自定义按钮样式的类名,<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;cb: 按钮click事件的回调, 可接受一个dialog对象<br />
+					}
+				</dd>
+			</dl>
+			<dl>
+				<dt>提示框参数:</dt>
+				<dd>
+					icon: 图标,可选值有 success/error/info/help
+				</dd>
+				<dd>
+					fontColor: 提示文字的颜色
+				</dd>
+				<dd>
+					hideTime: 自动关闭的时间(单位:ms),为零则不自动关闭
+				</dd>
+			</dl>
+			
+		</div>
 		<div id="a" style="display: none;">
 			<p>真的要这样子？</p>
-			<button id="enter">确认</button>
-			<button id="cancel">取消</button>
 		</div>
 		<div id="tooltip_1" style="display: none;">
 			<span>啦啦啦</span>
@@ -31,7 +80,7 @@
 		$(function(){
 			$("#btn_1").on('click', function(){
 				$('#a').dialog({
-					title:'没有XX',
+					title:'提示',
 					open:function(dialog){
 						$('#cancel').on('click', function(){
 							dialog.close()

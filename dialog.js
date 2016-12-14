@@ -4,7 +4,6 @@
 
 "use strict";
 ;(function($, window, document, undefined){
-	
 	// 提示类
 	var Tooltip = function(ele, opt){
 		this.$element = ele
@@ -37,7 +36,6 @@
 				$tooltip.append('<span class="text">' + this_obj.$element.html() + '</span>')	// 元素内的弹窗内容
 				this_obj.$element.empty()
 			}
-				
 			if(this_obj.options.icon in this_obj.icons)$tooltip.prepend(this_obj.icons[this_obj.options.icon])	// 提示图标
 			$tooltip.appendTo('body')
 			this_obj.$toolitp = $tooltip
@@ -137,19 +135,19 @@
 				$cancelBtn.appendTo($dialog_btns)
 				$dialog_btns.show()
 			}
-			if(this.options.showClose)
+			if(this_obj.options.showClose)
 				$dialog_tools.appendTo($dialog)		// 不显示关闭按钮
-			if(this.options.content)
-				$dialog_body.append(this.options.content).css('padding-top','20px')		// 参数传入的弹窗内容
-			else if(this.$element.html)
+			if(this_obj.options.content)
+				$dialog_body.append(this_obj.options.content).css('padding-top','20px')		// 参数传入的弹窗内容
+			else if(this_obj.$element.html)
 			{
-				$dialog_body.html(this.$element.html())	// 元素内的弹窗内容
-				this.$element.empty()
+				$dialog_body.html(this_obj.$element.html())	// 元素内的弹窗内容
+				this_obj.$element.empty()
 			}
-			if(this.options.width)$dialog.width(this.options.width)	// 自定义宽度
-			if(this.options.height)$dialog.height(this.options.height)	// 自定义高度
-			if(this.options.title)
-				$dialog_title.addClass('dialog_title').html(this.options.title)	// 自定义标题
+			if(this_obj.options.width)$dialog.width(this_obj.options.width)	// 自定义宽度
+			if(this_obj.options.height)$dialog.height(this_obj.options.height)	// 自定义高度
+			if(this_obj.options.title)
+				$dialog_title.addClass('dialog_title').html(this_obj.options.title)	// 自定义标题
 			else
 				$dialog_title.detach()
 			this_obj.$dialog_shade = $shade.appendTo("body")	// 添加弹窗到文档

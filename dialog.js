@@ -30,12 +30,12 @@
 				.css('color', this_obj.options.fontColor)	// 字体颜色
 				.addClass(this_obj.options.type || 'tooltip_1') 	// 提示风格
 				.hide()
-			if(this.options.content)
-				$tooltip.append('<span class="text">' + this.options.content + '</span>')		// 参数传入的弹窗内容
-			else if(this.$element.html)
+			if(this_obj.options.content)
+				$tooltip.append('<span class="text">' + this_obj.options.content + '</span>')		// 参数传入的弹窗内容
+			else if(this_obj.$element.html)
 			{
-				$tooltip.append('<span class="text">' + this.$element.html() + '</span>')	// 元素内的弹窗内容
-				this.$element.html('')
+				$tooltip.append('<span class="text">' + this_obj.$element.html() + '</span>')	// 元素内的弹窗内容
+				this_obj.$element.empty()
 			}
 				
 			if(this_obj.options.icon in this_obj.icons)$tooltip.prepend(this_obj.icons[this_obj.options.icon])	// 提示图标
@@ -65,12 +65,15 @@
 		this.$dialog_shade = null
 		this.defaults = {
 			width: '400px',
-			height: '200px',
+			height: '300px',
 			title: '',
 			content: '',
 			hideTime: 0,
 			open: null,
-			close: null
+			close: null,
+			showClose: true,
+			enterBtn: null,
+			cancelBtn: null
 		}
 		this.options = $.extend({}, this.defaults, opt)
 	}
@@ -80,17 +83,69 @@
 			,$shade = $('<div class="shade"></div>').hide()		// 遮罩层
 			,$dialog = $('<div class="dialog"></div>').appendTo($shade)		// 弹窗主体
 			,$dialog_title = $('<div></div>').appendTo($dialog)		//弹窗标题
-			,$dialog_tools = $('<div class="dialog_tools"></div>').appendTo($dialog)	// 工具条
+			,$dialog_tools = $('<div class="dialog_tools"></div>')	// 工具条
 			,$close_btn = $('<a href="javascript:;">×</a>').appendTo($dialog_tools).on('click', function(){this_obj.close()})	// 关闭按钮
 			,$dialog_body = $('<div class="dialog_body"></div>').appendTo($dialog)		// 弹窗内容
+			,$dialog_btns = $('<div class="dialog_btns"></div>').appendTo($dialog).hide()	// 按钮列表
+			if(this_obj.options.enterBtn)	// 确认按钮
+			{
+				var $enterBtn = $('<button></button>')			
+				if(this_obj.options.enterBtn.text)		// 文字
+					$enterBtn.text(this_obj.options.enterBtn.text)
+				else
+					$enterBtn.text('确认')
+				
+				if(this_obj.options.enterBtn.style)		// 样式
+					$enterBtn.addClass(this_obj.options.enterBtn.style)
+				else
+					$enterBtn.addClass('def-btn')
+					
+				if(this_obj.options.enterBtn.cb)		// 回调
+					$enterBtn.on('click', function(){
+						this_obj.options.enterBtn.cb(this_obj) 
+					})
+				else
+					$enterBtn.on('click', function(){
+						this_obj.close()
+					})
+					
+				$enterBtn.appendTo($dialog_btns)
+				$dialog_btns.show()
+			}
+			if(this_obj.options.cancelBtn)	// 取消按钮
+			{
+				var $cancelBtn = $('<button></button>')			
+				if(this_obj.options.cancelBtn.text)		// 文字
+					$cancelBtn.text(this_obj.options.cancelBtn.text)
+				else
+					$cancelBtn.text('取消')
+				
+				if(this_obj.options.cancelBtn.style)		// 样式
+					$cancelBtn.addClass(this_obj.options.cancelBtn.style)
+				else
+					$cancelBtn.addClass('def-btn')
+					
+				if(this_obj.options.cancelBtn.cb)		// 回调
+					$cancelBtn.on('click', function(){
+						this_obj.options.cancelBtn.cb(this_obj) 
+					})
+				else
+					$cancelBtn.on('click', function(){
+						this_obj.close()
+					})
+					
+				$cancelBtn.appendTo($dialog_btns)
+				$dialog_btns.show()
+			}
+			if(this.options.showClose)
+				$dialog_tools.appendTo($dialog)		// 不显示关闭按钮
 			if(this.options.content)
 				$dialog_body.append(this.options.content).css('padding-top','20px')		// 参数传入的弹窗内容
 			else if(this.$element.html)
 			{
 				$dialog_body.html(this.$element.html())	// 元素内的弹窗内容
-				this.$element.html('')
+				this.$element.empty()
 			}
-				
 			if(this.options.width)$dialog.width(this.options.width)	// 自定义宽度
 			if(this.options.height)$dialog.height(this.options.height)	// 自定义高度
 			if(this.options.title)

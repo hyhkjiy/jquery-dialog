@@ -31,11 +31,15 @@
 		$(function(){
 			$("#btn_1").on('click', function(){
 				$('#a').dialog({
-					title:'提示',
+					title:'没有XX',
 					open:function(dialog){
 						$('#cancel').on('click', function(){
 							dialog.close()
 						})
+					},
+					enterBtn:{
+					},
+					cancelBtn:{
 					}
 				})
 			})
